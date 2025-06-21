@@ -1,0 +1,31 @@
+@model TruyenAnime.Models.Product
+@{
+    ViewData["Title"] = "Xác nhận xóa Sản phẩm";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="container mt-5">
+    <h2 class="mb-4 text-danger">@ViewData["Title"]</h2>
+    <div class="mb-3">
+        <h4>@Model.Name</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-3">Tác giả</dt>
+            <dd class="col-sm-9">@Model.Author</dd>
+            <dt class="col-sm-3">Giá</dt>
+            <dd class="col-sm-9">@Model.Price.ToString("N0") VNĐ</dd>
+            <dt class="col-sm-3">Tồn kho</dt>
+            <dd class="col-sm-9">@Model.Stock</dd>
+            <dt class="col-sm-3">Năm XB</dt>
+            <dd class="col-sm-9">@Model.PublishYear</dd>
+            <dt class="col-sm-3">NXB</dt>
+            <dd class="col-sm-9">@Model.Publisher</dd>
+            <dt class="col-sm-3">Kích thước</dt>
+            <dd class="col-sm-9">@Model.Size</dd>
+        </dl>
+        <form asp-action="DeleteProduct">
+            <input type="hidden" asp-for="Id" />
+            <button type="submit" class="btn btn-danger">Xóa</button>
+            <a asp-action="Products" class="btn btn-secondary ms-2">← Quay lại</a>
+        </form>
+    </div>
+</div>

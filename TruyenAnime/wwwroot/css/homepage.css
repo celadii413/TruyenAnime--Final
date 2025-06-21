@@ -1,0 +1,290 @@
+﻿/* ==== Font + Nền ==== */
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #ffffff;
+    color: #000;
+    margin: 0;
+    padding: 0;
+}
+html, body {
+    overflow-x: hidden;
+}
+
+/* ==== Banner (Chuẩn theo hình) ==== */
+.banner-section {
+    background-color: #f8f8f8;
+    padding: 230px 20px;
+    margin-bottom: 40px;
+}
+
+.banner-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    justify-content: flex-start;
+}
+
+    .banner-content h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #000; 
+        margin-bottom: 20px;
+    }
+
+.banner-btn {
+    background-color: #d4f8cb; 
+    color: #1c6b2b; 
+    padding: 12px 28px;
+    font-size: 1.05rem;
+    font-weight: 600;
+    border-radius: 25px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+
+    .banner-btn:hover {
+        background-color: #c0f0b6; 
+        color: #145c22;
+    }
+
+
+.banner-box {
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 12px;
+    padding: 2rem 3rem;
+    display: inline-block;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    backdrop-filter: blur(3px);
+    justify-content: flex-start;
+}
+
+
+/* ==== Tabs lọc ==== */
+.product-filters .btn-filter {
+    border: 1px solid #A4D562;
+    border-radius: 20px;
+    background-color: #F3FBEF;
+    color: #3B7A2A;
+    font-weight: 500;
+    padding: 10px 22px;
+    margin: 5px;
+    transition: all 0.3s ease;
+}
+    .product-filters .btn-filter:focus {
+        outline: none;
+        box-shadow: none;
+    }
+
+    .product-filters .btn-filter.active,
+    .product-filters .btn-filter:hover {
+        background-color: #A4D562;
+        color: #fff;
+    }
+
+/* ==== Tiêu đề ==== */
+.product-section-title {
+    font-size: 28px;
+    font-weight: bold;
+    position: relative;
+    color: #000;
+}
+
+    .product-section-title::after {
+        content: '';
+        display: block;
+        width: 60px;
+        height: 3px;
+        background-color: #A4D562;
+        margin: 10px auto 0;
+        border-radius: 5px;
+    }
+
+/* ==== Card Sản phẩm ==== */
+.product-card {
+    border: none;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #fff;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    position: relative;
+}
+
+    .product-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+    }
+
+.product-image {
+    width: 100%;
+    height: 380px;
+    object-fit: cover;
+    border-radius: 12px 12px 0 0;
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1rem;
+    flex-grow: 1;
+}
+
+    .card-body > div:last-child {
+        margin-top: auto;
+    }
+
+/* ==== Tiêu đề sản phẩm ==== */
+.product-title a {
+    color: #000;
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.product-card:hover .product-title a {
+    color: #3B7A2A;
+}
+
+/* ==== Giá ==== */
+.price .current-price {
+    color: #3B7A2A;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.price .original-price {
+    text-decoration: line-through;
+    color: #aaa;
+    font-size: 0.85rem;
+}
+
+/* ==== Badge ==== */
+.badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 0.7rem;
+    padding: 4px 8px;
+    border-radius: 12px;
+}
+
+.badge-hot-deal {
+    background-color: #C04A4A;
+    color: #fff;
+}
+
+.badge-new {
+    background-color: #1E9E8C;
+    color: #fff;
+}
+
+.badge-best-seller {
+    background-color: #FFCD3C;
+    color: #000;
+}
+
+/* ==== Nút Xem chi tiết ==== */
+.btn-view-detail {
+    height: 35px;
+    margin-top: 15px;
+    border: 1px solid #3B7A2A;
+    color: #3B7A2A;
+    background-color: transparent;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    padding: 6px 14px;
+    transition: 0.3s ease-in-out;
+    font-weight: 500;
+}
+
+    .btn-view-detail:hover {
+        background-color: #3B7A2A;
+        color: #fff;
+    }
+    .btn-view-detail:focus {
+        outline: none;
+        box-shadow: none;
+    }
+
+/* ==== Khu vực nút hành động ==== */
+.card-actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+/* ==== Nút Thêm vào giỏ ==== */
+.card-body form {
+    margin-top: 15px;
+    display: inline-block;
+    margin-left: 6px;
+}
+
+    .card-body form button[type="submit"] {
+        height: 35px;
+        background-color: #d4f8cb;
+        color: #1c6b2b;
+        border: none;
+        font-size: 0.85rem;
+        font-weight: 600;
+        border-radius: 6px;
+        padding: 6px 14px;
+        transition: background-color 0.3s ease-in-out;
+        display: inline-block;
+        white-space: nowrap;
+    }
+
+        .card-body form button[type="submit"]:hover {
+            background-color: #3B7A2A;
+            color: #fff;
+        }
+        .card-body form button[type="submit"]:focus {
+            outline: none;
+            box-shadow: none;
+        }
+
+
+/* ==== Phần Shipping Cuối Trang ==== */
+.features-section {
+    background-color: #ffffff;
+    padding: 50px 0;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.feature-box {
+    background-color: #f8f8f8;
+    border-radius: 8px;
+    padding: 15px 25px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: auto;
+    min-width: 250px;
+    justify-content: center;
+}
+
+.feature-icon {
+    font-size: 30px;
+    color: #27ae60;
+}
+
+.feature-text {
+    margin-top: 15px;
+    font-size: 20px;
+    font-weight: 500;
+    color: #000;
+    white-space: nowrap;
+}
+

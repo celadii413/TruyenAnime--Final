@@ -1,0 +1,42 @@
+﻿<!-- ContactList.cshtml -->
+@model IEnumerable<TruyenAnime.Models.ContactMessage>
+@{
+    ViewData["Title"] = "Quản lý Liên hệ";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="container mt-5">
+    <h2 class="mb-4">@ViewData["Title"]</h2>
+
+    @if (TempData["ContactDeletedMessage"] != null)
+    {
+        <div class="alert alert-success">@TempData["ContactDeletedMessage"]</div>
+    }
+
+    <table class="table table-hover table-bordered shadow-sm">
+        <thead class="table-dark text-center">
+            <tr>
+                <th>Tên</th>
+                <th>Email</th>
+                <th>Ngày gửi</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var msg in Model)
+            {
+                <tr>
+                    <td>@msg.Name</td>
+                    <td>@msg.Email</td>
+                    <td>@msg.SentDate.ToString("dd/MM/yyyy HH:mm")</td>
+                    <td>
+                        <a asp-action="ContactDetail" asp-route-id="@msg.Id" class="btn btn-sm btn-outline-info">Xem</a>
+                        <form asp-action="DeleteContactMessage" method="post" class="d-inline" onsubmit="return confirm('Xác nhận xóa?');">
+                            <input type="hidden" name="id" value="@msg.Id" />
+                            <button type="submit" class="btn btn-sm btn-outline-danger">Xóa</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

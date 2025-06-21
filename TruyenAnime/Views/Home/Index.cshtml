@@ -1,0 +1,129 @@
+@model IEnumerable<TruyenAnime.Models.Product>
+
+@{
+    ViewData["Title"] = "Trang chủ";
+    var banner = ViewBag.Banner as TruyenAnime.Models.Banner;
+    var bannerTitle = banner?.Title ?? "Truyện mới tháng này";
+    var bannerButtonText = banner?.ButtonText ?? "Mua ngay";
+    var bannerImageUrl = banner?.BackgroundImageUrl ?? "/images/default-banner.jpg";
+    var bannerBgColor = banner?.BackgroundColor ?? "#f8f9fa";
+}
+
+<div class="container-fluid px-0">
+    <section class="banner-section"
+             style="background-color:@(banner?.BackgroundColor ?? "#f8f9fa");
+                @(string.IsNullOrEmpty(banner?.BackgroundImageUrl) ? "" : $"background-image:url('{banner.BackgroundImageUrl}'); background-size:cover; background-position:center;")">
+        <div class="banner-content">
+            <div class="banner-box">
+                <h1>@banner?.Title</h1>
+                <a asp-controller="Product" asp-action="Index" class="banner-btn mt-3">@banner?.ButtonText</a>
+            </div>
+        </div>
+    </section>
+
+
+    <div class="row product-section mb-5 px-lg-5">
+        <div class="col-12">
+            <h2 class="text-center mb-4 product-section-title">Sản phẩm</h2>
+            <div class="text-center mb-4 product-filters">
+                <a asp-action="FilteredProducts" asp-route-filter="all"
+                   class="btn btn-filter @(string.IsNullOrEmpty(ViewBag.CurrentFilter) || ViewBag.CurrentFilter == "all" ? "active" : "") me-2">Tất cả</a>
+                <a asp-action="FilteredProducts" asp-route-filter="new" class="btn btn-filter @(ViewBag.CurrentFilter == "new" ? "active" : "") me-2">Truyện mới</a>
+                <a asp-action="FilteredProducts" asp-route-filter="bestseller" class="btn btn-filter @(ViewBag.CurrentFilter == "bestseller" ? "active" : "") me-2">Bán chạy</a>
+                <a asp-action="FilteredProducts" asp-route-filter="hot" class="btn btn-filter @(ViewBag.CurrentFilter == "hot" ? "active" : "")">Hot Deals</a>
+            </div>
+
+
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-5 g-4">
+                @if (Model != null && Model.Any())
+                {
+                    foreach (var product in Model)
+                    {
+                        <div class="col">
+                            <div class="card h-100 product-card">
+                                <a asp-controller="Product" asp-action="Detail" asp-route-id="@product.Id">
+                                    @if (!string.IsNullOrEmpty(product.ImageUrl))
+                                    {
+                                        <img src="@product.ImageUrl" class="card-img-top product-image" alt="@product.Name">
+                                    }
+                                    else
+                                    {
+                                        <div class="product-image d-flex align-items-center justify-content-center bg-light">
+                                            <span>No Image</span>
+                                        </div>
+                                    }
+                                </a>
+                                @if (product.IsHotDeal)
+                                {
+                                    <span class="badge badge-hot-deal">Hot Deal</span>
+                                }
+                                else if (product.IsNewArrival)
+                                {
+
+                                    <span class="badge badge-new">New</span>
+                                }
+                                else if (product.IsBestSeller)
+                                {
+
+                                    <span class="badge badge-best-seller">Best Seller</span>
+                                }
+
+                                <div class="card-body text-center d-flex flex-column justify-content-between">
+                                    <div>
+                                        <h5 class="card-title product-title">
+                                            <a asp-controller="Product" asp-action="Detail" asp-route-id="@product.Id">@product.Name</a>
+                                        </h5>
+                                        <p class="card-text price">
+                                            <span class="current-price">@product.Price.ToString("C", new System.Globalization.CultureInfo("vi-VN"))</span>
+                                        </p>
+                                    </div>
+                                    <div class="card-actions mt-auto">
+                                        <a asp-controller="Product" asp-action="Detail" asp-route-id="@product.Id" class="btn btn-sm btn-view-detail">Xem chi tiết</a>
+                                        <form asp-controller="Cart" asp-action="AddToCart" method="post">
+                                            <input type="hidden" name="id" value="@product.Id" />
+                                            <button type="submit" class="btn btn-sm btn-add-cart">Thêm vào giỏ</button>
+                                        </form>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="col-12">
+                        <p class="text-center">Không có sản phẩm nào để hiển thị.</p>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="features-section">
+        <div class="feature-box">
+            <i class="fas fa-truck feature-icon"></i>
+            <p class="feature-text">Good shipping</p>
+        </div>
+        <div class="feature-box">
+            <i class="fas fa-dollar-sign feature-icon"></i>
+            <p class="feature-text">Good pricing</p>
+        </div>
+        <div class="feature-box">
+            <i class="fas fa-gift feature-icon"></i>
+            <p class="feature-text">Good gifts</p>
+        </div>
+        <div class="feature-box">
+            <i class="fas fa-clock feature-icon"></i>
+            <p class="feature-text">Timely delivery</p>
+        </div>
+    </div>
+
+</div>
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/homepage.css" asp-append-version="true" />
+}
+@section Scripts {
+}

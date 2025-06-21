@@ -1,0 +1,188 @@
+@model TruyenAnime.Models.Product
+
+<link rel="stylesheet" href="~/css/productdetail.css?v=3" />
+
+
+@{
+    ViewData["Title"] = Model.Name;
+    var reviews = ViewBag.Reviews as IEnumerable<TruyenAnime.Models.Review>;
+}
+
+<nav class="breadcrumb-bar" aria-label="breadcrumb">
+    <div class="container">
+        <ol class="breadcrumb custom-breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Trang chủ</a></li>
+            <li class="breadcrumb-item"><a>@Model.Category.Name</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@Model.Name</li>
+        </ol>
+    </div>
+</nav>
+
+
+<div class="product-detail-wrapper">
+    <div class="product-main-section">
+        <div class="product-gallery">
+            <div class="main-img" style="background-image: url('@Model.ImageUrl')"></div>
+        </div>
+        <div class="product-info-block">
+            <div class="info-section product-title">@Model.Name</div>
+
+            <div class="info-section product-attrs-row">
+                <div class="info-section product-attr-col">
+                    <div><strong>Tác giả:</strong> @Model.Author</div>
+                    <div><strong>Năm xuất bản:</strong> @Model.PublishYear</div>
+                </div>
+                <div class="info-section product-attr-col">
+                    <div><strong>Nhà xuất bản:</strong> @Model.Publisher</div>
+                    <div><strong>Kích thước:</strong> @Model.Size</div>
+                </div>
+            </div>
+
+
+            <div class="info-section product-stock-bar @(Model.Stock > 0 ? "in-stock" : "out-of-stock")">
+                @(Model.Stock > 0 ? "Còn hàng" : "Hết hàng")
+            </div>
+
+
+            <div class="info-section product-price-row">
+                <span class="old-price">500,000 đ</span>
+                <span class="new-price">@Model.Price.ToString("N0") đ</span>
+
+                @{
+                    var avgRating = ViewBag.AvgRating != null ? Convert.ToDouble(ViewBag.AvgRating) : 0;
+                    var fullStars = (int)Math.Floor(avgRating);
+                    var emptyStars = 5 - fullStars;
+                }
+
+                <span class="star-rating">
+                    @Html.Raw(new string('★', fullStars) + new string('☆', emptyStars))
+                </span>
+            </div>
+
+
+            <form asp-controller="Cart" asp-action="AddToCart" asp-route-id="@Model.Id" method="post" class="info-section product-cart-row">
+                <div class="qty-group">
+                    <span>Số lượng</span>
+                    <button type="button" class="qty-btn" id="btn-minus">-</button>
+                    <input type="number" id="qty-input" name="quantity" value="1" min="1" class="qty-input" />
+                    <button type="button" class="qty-btn" id="btn-plus">+</button>
+                </div>
+                <button class="add-cart-btn" type="submit">Thêm vào giỏ</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="product-tabs-section">
+        <div class="tabs-header">
+            <div class="tab-btn active">Mô tả sản phẩm</div>
+            <div class="tab-btn">Đánh giá</div>
+        </div>
+        <div class="tabs-content">
+            <div class="tab-pane active">
+                <div class="desc-content">@Model.Description</div>
+            </div>
+            <div class="tab-pane">
+                @if (TempData["ReviewErrors"] != null)
+                {
+                    <div class="alert alert-danger">@TempData["ReviewErrors"]</div>
+                }
+
+                <div class="review-section">
+                    <div class="review-list">
+                        @foreach (var item in reviews)
+                        {
+                            <div class="review-item">
+                                <div class="review-avatar"></div>
+                                <div>
+                                    <div class="review-date">@item.CreatedAt.ToString("dd/MM/yyyy")</div>
+                                    <div class="review-user">@item.Username</div>
+                                    <div class="review-rating">
+                                        @Html.Raw(new string('★', item.Rating) + new string('☆', 5 - item.Rating))
+                                    </div>
+                                    <div class="review-text">@item.Content</div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+                    <form asp-controller="Review" asp-action="Add" method="post" class="review-form-block">
+                        <div class="review-form-title">Thêm đánh giá của bạn</div>
+
+                        <input type="hidden" name="ProductId" value="@Model.Id" />
+
+                        <div class="form-field">
+                            <label for="username">Username</label>
+                            <input type="text" id="username" name="Username" required />
+                        </div>
+
+                        <div class="form-field">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="Email" required />
+                        </div>
+
+                        <div class="form-field">
+                            <label for="rating">Đánh giá</label>
+                            <select name="Rating" id="rating" required>
+                                <option value="5">★★★★★ - Tuyệt vời</option>
+                                <option value="4">★★★★ - Tốt</option>
+                                <option value="3">★★★ - Trung bình</option>
+                                <option value="2">★★ - Tệ</option>
+                                <option value="1">★ - Rất tệ</option>
+                            </select>
+                        </div>
+
+                        <div class="form-field">
+                            <label for="content">Nhận xét</label>
+                            <textarea id="content" name="Content" placeholder="Hãy nhập nội dung đánh giá của bạn..." required></textarea>
+                        </div>
+
+                        <button type="submit" class="send-review-btn">Gửi đánh giá</button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const input = document.getElementById("qty-input");
+        const btnMinus = document.getElementById("btn-minus");
+        const btnPlus = document.getElementById("btn-plus");
+
+        btnMinus.addEventListener("click", () => {
+            let val = parseInt(input.value);
+            if (val > 1) input.value = val - 1;
+        });
+
+        btnPlus.addEventListener("click", () => {
+            let val = parseInt(input.value);
+            input.value = val + 1;
+        });
+
+        // Tabs
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabPanes = document.querySelectorAll('.tab-pane');
+        tabBtns.forEach((btn, idx) => {
+            btn.onclick = () => {
+                tabBtns.forEach(b => b.classList.remove('active'));
+                tabPanes.forEach(p => p.classList.remove('active'));
+                btn.classList.add('active');
+                tabPanes[idx].classList.add('active');
+            };
+        });
+    });
+</script>
+<style>
+    .product-stock-bar {
+        font-weight: 600;
+        font-size: 16px;
+        padding: 6px 12px;
+        border-radius: 6px;
+        display: inline-block;
+        margin-bottom: 16px;
+        background-color: @(Model.Stock > 0 ? "#e6f4ea" : "#fdecea");
+        color: @(Model.Stock > 0 ? "#1e8e3e" : "#c62828");
+    }
+</style>

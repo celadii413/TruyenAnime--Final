@@ -1,0 +1,55 @@
+﻿@model IEnumerable<TruyenAnime.Models.Review>
+@{
+    ViewData["Title"] = "Chi tiết Đánh giá";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    var productId = ViewBag.ProductId;
+}
+
+<div class="container mt-5">
+    <h2 class="mb-4">@ViewData["Title"]</h2>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped text-center align-middle shadow-sm">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">Người đánh giá</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Số sao</th>
+                    <th scope="col">Nội dung</th>
+                    <th scope="col">Ngày tạo</th>
+                    <th scope="col">Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var review in Model)
+                {
+                    <tr>
+                        <td>@review.Username</td>
+                        <td>@review.Email</td>
+                        <td>
+                            <span class="text-warning fw-bold">
+                                @review.Rating <i class="bi bi-star-fill"></i>
+                            </span>
+                        </td>
+                        <td class="text-start" style="max-width: 300px; word-break: break-word; white-space: normal;">
+                            @review.Content
+                        </td>
+                        <td>@review.CreatedAt.ToString("dd/MM/yyyy HH:mm")</td>
+                        <td>
+                            <form asp-action="DeleteReview" asp-controller="Admin" method="post" onsubmit="return confirm('Xác nhận xóa đánh giá này?');">
+                                <input type="hidden" name="reviewId" value="@review.Id" />
+                                <input type="hidden" name="productId" value="@productId" />
+                                <button type="submit" class="btn btn-sm btn-outline-danger">
+                                    <i class="bi bi-trash"></i> Xóa
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <a asp-action="ReviewSummary" class="btn btn-outline-secondary mb-3">
+        <i class="bi bi-arrow-left"></i>← Quay lại
+    </a>
+</div>

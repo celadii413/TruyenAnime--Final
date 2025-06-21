@@ -1,0 +1,56 @@
+@{
+    ViewData["Title"] = "Đặt hàng thành công";
+}
+
+<div class="container py-5 mt-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2 text-center">
+            <div class="completion-icon mb-4">
+                <i class="fas fa-check-circle fa-5x text-success"></i>
+            </div>
+            <h2>Cảm ơn bạn đã đặt hàng!</h2>
+            <p class="lead">Đơn hàng của bạn đã được nhận thành công.</p>
+            <p>Mã đơn hàng của bạn là: <strong>#@ViewBag.OrderId</strong></p>
+            <p>Chúng tôi sẽ xử lý đơn hàng của bạn và giao hàng trong thời gian sớm nhất.</p>
+            <hr>
+            <p>Nếu có bất kỳ câu hỏi nào, vui lòng liên hệ với chúng tôi.</p>
+            <a asp-controller="Home" asp-action="Index" class="btn custom-btn mt-3">Tiếp tục mua sắm</a>
+        </div>
+    </div>
+</div>
+
+<style>
+    .custom-btn {
+        background-color: #d4f8cb;
+        color: #1c6b2b;
+        padding: 0.6rem 1.5rem;
+        font-weight: 600;
+        border: none;
+        border-radius: 30px;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+        .custom-btn:hover {
+            background-color: #c0f0b6;
+            color: #145c22;
+        }
+
+    .completion-icon {
+        animation: pop-in 0.5s ease-out;
+    }
+
+    @@keyframes pop-in {
+        0% {
+            transform: scale(0);
+            opacity: 0;
+        }
+        80% {
+            transform: scale(1.2);
+            opacity: 1;
+        }
+        100% {
+            transform: scale(1);
+        }
+    }
+
+</style>

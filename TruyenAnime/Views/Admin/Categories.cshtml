@@ -1,0 +1,54 @@
+﻿@model IEnumerable<TruyenAnime.Models.Category>
+@{
+    ViewData["Title"] = "Quản lý Danh mục";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>@ViewData["Title"]</h2>
+        <a asp-action="CreateCategory" class="btn btn-success">
+            <i class="fas fa-plus"></i> Thêm danh mục
+        </a>
+    </div>
+
+    @if (TempData["CategoryCreatedMessage"] != null)
+    {
+        <div class="alert alert-success">@TempData["CategoryCreatedMessage"]</div>
+    }
+    @if (TempData["CategoryUpdatedMessage"] != null)
+    {
+        <div class="alert alert-success">@TempData["CategoryUpdatedMessage"]</div>
+    }
+    @if (TempData["CategoryDeletedMessage"] != null)
+    {
+        <div class="alert alert-success">@TempData["CategoryDeletedMessage"]</div>
+    }
+
+    <table class="table table-bordered table-hover shadow-sm text-center">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Tên danh mục</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var cat in Model)
+            {
+                <tr>
+                    <td>@cat.Id</td>
+                    <td>@cat.Name</td>
+                    <td>
+                        <a asp-action="EditCategory" asp-route-id="@cat.Id" class="btn btn-sm btn-outline-warning">Sửa</a>
+                        <form asp-action="DeleteCategory" asp-route-id="@cat.Id" method="post" class="d-inline">
+                            <button type="submit" class="btn btn-sm btn-outline-danger"
+                                    onclick="return confirm('Bạn có chắc chắn muốn xóa?')">
+                                Xóa
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

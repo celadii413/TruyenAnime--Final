@@ -1,0 +1,45 @@
+@model TruyenAnime.Models.Order
+@{
+    ViewData["Title"] = $"Chi tiết đơn hàng #{Model.OrderId}";
+}
+<div class="container mt-4">
+    <h2 class="mb-4">Chi tiết đơn hàng #@Model.OrderId</h2>
+    <div class="mb-3">
+        <strong>Ngày đặt:</strong> @Model.OrderPlaced.ToString("dd/MM/yyyy HH:mm")<br />
+        <strong>Họ tên:</strong> @Model.Name <br />
+        <strong>Địa chỉ giao hàng:</strong> @Model.Address <br />
+        <strong>Số điện thoại:</strong> @Model.PhoneNumber <br />
+        <strong>Email:</strong> @Model.Email <br />
+    </div>
+    <table class="table table-bordered table-hover">
+        <thead class="table-light">
+            <tr>
+                <th>Sản phẩm</th>
+                <th>Số lượng</th>
+                <th>Đơn giá</th>
+                <th>Thành tiền</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model.OrderDetails)
+        {
+            <tr>
+                <td>@item.Product?.Name</td>
+                <td>@item.Quantity</td>
+                <td>@string.Format("{0:N0} đ", item.Price)</td>
+                <td>@string.Format("{0:N0} đ", item.Price * item.Quantity)</td>
+            </tr>
+        }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3" class="text-end"><strong>Tổng cộng:</strong></td>
+                <td><strong>@string.Format("{0:N0} đ", Model.OrderTotal)</strong></td>
+            </tr>
+        </tfoot>
+    </table>
+    <a asp-controller="Account" asp-action="MyAccount" class="btn btn-outline-secondary">Quay lại danh sách đơn hàng</a>
+</div>
+<style>
+    .table th, .table td { vertical-align: middle; }
+</style>

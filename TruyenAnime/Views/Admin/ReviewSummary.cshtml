@@ -1,0 +1,35 @@
+﻿@model IEnumerable<TruyenAnime.Models.ReviewSummary>
+@{
+    ViewData["Title"] = "Tổng quan Đánh giá";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="container mt-5">
+    <h2 class="mb-4">@ViewData["Title"]</h2>
+    <table class="table table-hover table-bordered shadow-sm text-center align-middle">
+        <thead class="table-dark">
+            <tr>
+                <th>Ảnh</th>
+                <th>Tên sản phẩm</th>
+                <th>Số đánh giá</th>
+                <th>Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <img src="@item.ImageUrl" alt="@item.ProductName" class="rounded shadow-sm" style="width: 60px; height: 90px; object-fit: cover;" />
+                    </td>
+                    <td>@item.ProductName</td>
+                    <td><span class="badge bg-primary fs-6">@item.TotalReviews</span></td>
+                    <td>
+                        <a asp-action="ProductReviews" asp-route-productId="@item.ProductId" class="btn btn-sm btn-outline-primary">
+                            <i class="bi bi-chat-text"></i> Xem đánh giá
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

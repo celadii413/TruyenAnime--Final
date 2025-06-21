@@ -1,0 +1,92 @@
+@{
+    ViewData["Title"] = "Giỏ hàng trống";
+}
+
+<div class="container mt-4">
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb custom-breadcrumb">
+            <li class="breadcrumb-item">
+                <a asp-controller="Home" asp-action="Index">Trang chủ</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">Giỏ hàng</li>
+        </ol>
+    </nav>
+
+    <!-- Nội dung giỏ hàng -->
+    <div class="empty-cart-wrapper text-center">
+        <svg xmlns="http://www.w3.org/2000/svg" class="empty-cart-icon" fill="none" viewBox="0 0 24 24" stroke="black" stroke-width="1.5" width="100" height="100">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 7l2-3h14l2 3v11a2 2 0 01-2 2H5a2 2 0 01-2-2V7z" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M16 10a4 4 0 01-8 0" />
+        </svg>
+
+        <h2 class="fw-bold mb-3">Giỏ hàng của bạn đang trống</h2>
+
+        <a asp-controller="Product" asp-action="Index" class="btn btn-buy-now">Mua hàng</a>
+    </div>
+</div>
+
+<style>
+
+    .empty-cart-wrapper {
+        min-height: 50vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 3rem;
+    }
+
+    .empty-cart-icon {
+        width: 150px;
+        height: 150px;
+        margin-bottom: 1.5rem;
+    }
+
+    .btn-buy-now {
+        background-color: #d4f8cb;
+        color: #1c6b2b;
+        font-weight: 500;
+        padding: 10px 24px;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+        .btn-buy-now:focus,
+        .btn-buy-now:focus-visible {
+            outline: none !important;
+            box-shadow: none !important;
+        }
+
+
+.btn-buy-now:hover {
+    background-color: #c0f0b6;
+    color: #145c22;
+}
+
+.custom-breadcrumb {
+    background-color: transparent;
+    padding: 0;
+    font-size: 14px;
+    margin-bottom: 1rem;
+}
+
+.custom-breadcrumb .breadcrumb-item + .breadcrumb-item::before {
+    content: " / ";
+    color: #6c757d;
+}
+
+.custom-breadcrumb a {
+    color: #7c70b0;
+    text-decoration: none;
+}
+
+.custom-breadcrumb .breadcrumb-item.active {
+    color: #6c757d;
+}
+        
+</style>

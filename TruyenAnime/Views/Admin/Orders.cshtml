@@ -1,0 +1,40 @@
+@model IEnumerable<TruyenAnime.Models.Order>
+@{
+    ViewData["Title"] = "Quản lý Đơn hàng";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="container mt-5">
+    <h2 class="mb-4">@ViewData["Title"]</h2>
+    <table class="table table-hover table-bordered shadow-sm">
+        <thead class="table-dark text-center">
+            <tr>
+                <th>ID</th>
+                <th>Khách hàng</th>
+                <th>Ngày đặt</th>
+                <th>Tổng tiền</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Any())
+            {
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.OrderId</td>
+                        <td>@(item.User?.Username ?? "N/A")</td>
+                        <td>@item.OrderPlaced.ToString("g")</td>
+                        <td>@item.OrderTotal.ToString("N0") VNĐ</td>
+                        <td>
+                            <a asp-action="OrderDetails" asp-route-id="@item.OrderId" class="btn btn-sm btn-outline-info">Xem</a>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr><td colspan="5" class="text-center">Không có đơn hàng nào.</td></tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,90 @@
+@model TruyenAnime.Models.Cart
+
+@{
+    ViewData["Title"] = "Giỏ hàng";
+}
+
+<!-- Link đến CSS -->
+<link rel="stylesheet" href="~/css/cart.css" asp-append-version="true" />
+
+<div class="container cart-page mt-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Trang chủ</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Giỏ hàng</li>
+        </ol>
+    </nav>
+
+    @if (Model != null && Model.Items.Any())
+    {
+        <div class="row">
+            <!-- Danh sách sản phẩm -->
+            <div class="col-lg-8">
+                <div class="cart-items-list">
+                    <div class="cart-header d-none d-md-flex">
+                        <div class="col-product">Sản phẩm</div>
+                        <div class="col-price">Giá</div>
+                        <div class="col-quantity">Số lượng</div>
+                        <div class="col-total">Tạm tính</div>
+                        <div class="col-remove"></div>
+                    </div>
+
+                    @foreach (var item in Model.Items)
+                    {
+                        <div class="cart-item d-flex align-items-center flex-wrap">
+                            <div class="col-product d-flex align-items-center">
+                                <img src="@item.Product.ImageUrl" alt="@item.Product.Name" class="cart-img-fixed" />
+                                <div class="item-info">
+                                    <p class="item-name mb-0">@item.Product.Name</p>
+                                </div>
+                            </div>
+
+                            <div class="col-price text-center">@string.Format("{0:N0} ₫", item.Product.Price)</div>
+
+                            <div class="col-quantity text-center">
+                                <form asp-controller="Cart" asp-action="UpdateCart" method="post">
+                                    <input type="hidden" name="id" value="@item.Product.Id" />
+                                    <input type="number" name="quantity" value="@item.Quantity" min="1"
+                                           class="form-control quantity-input" onchange="this.form.submit()" />
+                                </form>
+                            </div>
+
+                            <div class="col-total text-center">@string.Format("{0:N0} ₫", item.Product.Price * item.Quantity)</div>
+
+                            <div class="col-remove text-center">
+                                <form asp-controller="Cart" asp-action="RemoveFromCart" method="post">
+                                    <input type="hidden" name="id" value="@item.Product.Id" />
+                                    <button type="submit" class="btn btn-sm btn-danger">&times;</button>
+                                </form>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <a asp-controller="Product" asp-action="Index" class="btn btn-outline-secondary btn-sm btn-continue-shopping mt-3">
+                    Tiếp tục mua sắm
+                </a>
+            </div>
+            
+            <!-- Tổng kết -->
+            <div class="col-lg-4">
+                <div class="cart-summary">
+                    <h4 class="summary-title">Tổng cộng</h4>
+                    <div class="summary-details">
+                        <p><span>Tạm tính:</span><span>@string.Format("{0:N0} ₫", Model.GetTotal())</span></p>
+                        <p><span>Phí vận chuyển:</span><span>Miễn phí</span></p>
+                        <hr />
+                        <p class="total"><span>Tổng tiền:</span><span>@string.Format("{0:N0} ₫", Model.GetTotal())</span></p>
+                    </div>
+                    <a asp-controller="Checkout" asp-action="Index" class="btn btn-checkout btn-equal w-100">Tiến hành thanh toán</a>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="text-center mt-5 empty-cart">
+            <h5>Giỏ hàng của bạn đang trống.</h5>
+            <a asp-controller="Product" asp-action="Index" class="btn btn-primary mt-3">Tiếp tục mua sắm</a>
+        </div>
+    }
+</div>

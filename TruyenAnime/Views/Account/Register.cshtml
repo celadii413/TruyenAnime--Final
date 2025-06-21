@@ -1,0 +1,76 @@
+@{
+    ViewData["Title"] = "Đăng ký";
+}
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <h2 class="text-center mb-4 page-title">Đăng ký</h2>
+            <hr class="title-hr mb-4"/>
+            <form asp-controller="Account" asp-action="Register" method="post">
+                <div class="mb-3">
+                    <label for="usernameInput" class="form-label">UserName</label>
+                    <input type="text" class="form-control form-control-lg" id="usernameInput" name="username" placeholder="UserName của bạn" required> 
+                </div>
+                <div class="mb-3">
+                    <label for="emailInput" class="form-label">Email</label>
+                    <input type="email" class="form-control form-control-lg" id="emailInput" name="email" placeholder="Email của bạn" required> 
+                </div>
+                <div class="mb-3">
+                    <label for="passwordInput" class="form-label">Mật khẩu</label>
+                    <input type="password" class="form-control form-control-lg" id="passwordInput" name="password" placeholder="Mật khẩu của bạn" required> 
+                </div>
+                <div class="mb-3">
+                    <label for="confirmPasswordInput" class="form-label">Nhập lại mật khẩu</label>
+                    <input type="password" class="form-control form-control-lg" id="confirmPasswordInput" placeholder="Nhập lại mật khẩu của bạn">
+                </div>
+                 <div class="mb-3">
+                    <a href="@Url.Action("Login", "Account")" class="form-text">Đã có tài khoản? Đăng nhập</a>
+                </div>
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary btn-lg btn-submit">Đăng ký</button>
+                </div>
+                @if (ViewBag.Error != null)
+                {
+                    <div class="alert alert-danger mt-3">@ViewBag.Error</div>
+                }
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <style>
+        .page-title {
+            font-weight: 300;
+            font-size: 2.5rem;
+        }
+        .title-hr {
+            width: 100px;
+            margin: 0 auto 2rem auto;
+            border-top: 2px solid #A095E0;
+        }
+        .form-control-lg {
+            padding: 0.75rem 1.25rem;
+            font-size: 1rem;
+        }
+        .btn-submit {
+            background-color: #A0E0A0; /* Light green from design */
+            border-color: #A0E0A0;
+            color: #333;
+            font-weight: 500;
+        }
+        .btn-submit:hover {
+            background-color: #8ccf8c;
+            border-color: #8ccf8c;
+            color: #333;
+        }
+         .form-text {
+            color: #A095E0;
+            text-decoration: none;
+        }
+        .form-text:hover {
+            text-decoration: underline;
+        }
+    </style>
+}

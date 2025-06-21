@@ -1,0 +1,33 @@
+﻿
+.footer {
+    background-color: #f5f7fa; 
+    border-top: 1px solid #e1e1e1;
+    font-size: 14px;
+    min-height: 200px;
+    width: 100%; 
+    margin-top: auto; 
+    padding: 20px 0;
+}
+
+
+    .footer .footer-logo a {
+        font-size: 30px;
+        font-weight: bold;
+        color: #229e73;
+        text-decoration: none;
+    }
+
+    .footer .social-icons {
+        display: flex;
+        align-items: center;
+    }
+
+        .footer .social-icons .social-link {
+            font-size: 1.2rem;
+            color: #555;
+            margin-left: 16px;
+        }
+
+            .footer .social-icons .social-link:hover {
+                color: #229e73;
+            }

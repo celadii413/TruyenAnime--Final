@@ -1,0 +1,55 @@
+﻿@model TruyenAnime.Models.Banner
+@{
+    ViewData["Title"] = "Quản lý Banner";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="container mt-5">
+    <h2 class="mb-4">@ViewData["Title"]</h2>
+
+    @if (TempData["BannerSavedMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["BannerSavedMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Đóng"></button>
+        </div>
+    }
+
+    <form asp-action="SaveBanner" method="post">
+        <div class="mb-3">
+            <label asp-for="Title" class="form-label">Tiêu đề</label>
+            <input asp-for="Title" class="form-control" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="ButtonText" class="form-label">Nút CTA</label>
+            <input asp-for="ButtonText" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="BackgroundImageUrl" class="form-label">Ảnh nền</label>
+            <input asp-for="BackgroundImageUrl" class="form-control" />
+            <div class="form-text">VD: /images/banner.jpg hoặc URL bên ngoài</div>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="BackgroundColor" class="form-label">Màu nền</label>
+            <input asp-for="BackgroundColor" class="form-control" placeholder="#f8f9fa" />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Lưu</button>
+    </form>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+    <script>
+        setTimeout(() => {
+            const alert = document.querySelector('.alert');
+            if (alert) {
+                alert.classList.remove('show');
+                alert.classList.add('fade');
+            }
+        }, 3000);
+    </script>
+}

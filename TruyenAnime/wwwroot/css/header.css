@@ -1,0 +1,178 @@
+﻿
+.top-bar {
+    background-color: #B4B0E3;
+    height: 70px;
+}
+
+
+.logo {
+    font-size: 32px;
+    color: #009173 !important;
+    font-weight: bold;
+}
+
+
+.navbar-nav .nav-link {
+    font-weight: 500;
+    font-size: 16px;
+    color: #000 !important;
+    transition: color 0.2s ease;
+}
+
+    .navbar-nav .nav-link:hover,
+    .navbar-nav .nav-link.active {
+        color: #009173 !important;
+    }
+
+
+/* === SEARCH BOX === */
+.search-box {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 999px;
+    padding: 6px 16px;
+    width: 100%;
+    min-width: 400px;
+    background-color: #fff;
+    position: relative;
+    transition: box-shadow 0.3s ease;
+    margin-right: 10px;
+}
+
+    .search-box i {
+        color: #222;
+        font-size: 18px;
+        margin-right: 10px;
+    }
+
+    .search-box input {
+        border: none;
+        outline: none;
+        background: transparent;
+        flex: 1;
+        font-size: 15px;
+        color: #222;
+    }
+
+    .search-box:hover {
+        box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+
+.search-suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #1f1f1f;
+    border-radius: 8px;
+    padding: 8px 0;
+    margin-top: 6px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    z-index: 999;
+}
+
+.search-suggestion-item {
+    padding: 8px 16px;
+    color: #fff;
+    cursor: pointer;
+    transition: background 0.2s;
+    font-size: 14px;
+}
+
+    .search-suggestion-item:hover {
+        background-color: #333;
+    }
+
+.clear-search-btn {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #aaa;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    padding: 0;
+    cursor: pointer;
+    z-index: 10;
+}
+
+    .clear-search-btn:hover {
+        color: #000;
+    }
+
+/* === CART ICON === */
+.cart-icon-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+    .cart-icon-wrapper i {
+        font-size: 22px;
+        color: #222;
+    }
+    .cart-icon-wrapper a {
+        text-decoration: none !important;
+    }
+
+
+/* === BADGE FIX === */
+.cart-count-badge {
+    position: absolute;
+    top: -6px;
+    right: -10px;
+    background-color: #f24c4c;
+    color: #fff;
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 50%;
+    padding: 0 6px;
+    height: 18px;
+    min-width: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Dropdown button (Tài khoản) */
+#accountDropdown {
+    color: white;
+    font-weight: 600;
+    padding: 8px 12px;
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
+}
+
+    #accountDropdown:hover,
+    #accountDropdown:focus {
+        background-color: #b19cd9; 
+        color: white;
+        outline: none;
+    }
+
+/* Dropdown menu */
+.dropdown-menu {
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    min-width: 180px;
+    padding: 8px 0;
+    margin-top: 8px !important;
+}
+
+    /* Dropdown item */
+    .dropdown-menu .dropdown-item {
+        padding: 10px 20px;
+        font-size: 15px;
+        color: #333;
+        transition: background-color 0.2s ease;
+        border-radius: 6px;
+    }
+
+        .dropdown-menu .dropdown-item:hover {
+            background-color: #f0f0ff;
+            color: #5a3ec8;
+        }

@@ -1,0 +1,146 @@
+@{
+    ViewData["Title"] = "Địa chỉ";
+}
+<div class="address-wrapper">
+    <nav class="breadcrumb-bar" aria-label="breadcrumb">
+        <ol class="breadcrumb custom-breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Trang chủ</a></li>
+            <li class="breadcrumb-item"><a asp-controller="Account" asp-action="MyAccount">Tài khoản</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Địa chỉ</li>
+        </ol>
+    </nav>
+    <div class="address-title">Địa chỉ</div>
+    <div class="address-main-section">
+        <div class="address-default-block">
+            <div class="address-block-title">Địa chỉ mặc định</div>
+            <div class="address-default-value">VietNam</div>
+            <a href="#" class="address-edit-link">Sửa</a>
+        </div>
+        <div class="address-form-block">
+            <div class="address-block-title">Nhập địa chỉ mới</div>
+            <input class="address-input" placeholder="Họ và tên" />
+            <textarea class="address-textarea" placeholder="Địa chỉ"></textarea>
+            <div class="address-row">
+                <select class="address-select">
+                    <option>Quận/ Huyện</option>
+                    <option>Quận 1</option>
+                    <option>Quận 2</option>
+                </select>
+                <select class="address-select">
+                    <option>Tỉnh</option>
+                    <option>Hồ Chí Minh</option>
+                    <option>Hà Nội</option>
+                </select>
+            </div>
+            <input class="address-input" placeholder="Số điện thoại" />
+            <div class="address-checkbox-row">
+                <input type="checkbox" id="defaultAddr" /> <label for="defaultAddr">Đặt làm địa chỉ mặc định</label>
+            </div>
+            <button class="address-add-btn">Thêm mới</button>
+        </div>
+    </div>
+</div>
+<style>
+.address-wrapper {
+    background: #fff;
+    font-family: 'Inter', Arial, sans-serif;
+    padding-bottom: 40px;
+}
+.breadcrumb-bar {
+    border-bottom: 2px solid #e5f4ec;
+    margin-bottom: 24px;
+    padding-top: 24px;
+}
+.custom-breadcrumb {
+    background: none;
+    margin-bottom: 0;
+    font-size: 14px;
+}
+.address-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 24px 0 16px 0;
+    color: #222;
+}
+.address-main-section {
+    display: flex;
+    gap: 40px;
+    border-top: 1px solid #e5f4ec;
+    padding-top: 24px;
+}
+.address-default-block {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.address-block-title {
+    font-weight: 700;
+    font-size: 18px;
+    margin-bottom: 8px;
+}
+.address-default-value {
+    color: #222;
+    font-size: 15px;
+    margin-bottom: 8px;
+}
+.address-edit-link {
+    color: #4caf50;
+    font-size: 15px;
+    text-decoration: underline;
+    cursor: pointer;
+    width: fit-content;
+}
+.address-form-block {
+    flex: 1;
+    background: #fafafa;
+    border-radius: 8px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 320px;
+}
+.address-input, .address-textarea, .address-select {
+    width: 100%;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    padding: 8px 12px;
+    font-size: 15px;
+    margin-bottom: 8px;
+}
+.address-row {
+    display: flex;
+    gap: 12px;
+}
+.address-checkbox-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+.address-add-btn {
+    background: #e5f4ec;
+    color: #4caf50;
+    border: none;
+    border-radius: 2px;
+    padding: 10px 0;
+    font-size: 15px;
+    font-weight: 500;
+    width: 100%;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.address-add-btn:hover {
+    background: #c8e6c9;
+}
+@@media (max-width: 900px) {
+    .address-main-section {
+        flex-direction: column;
+        gap: 24px;
+    }
+    .address-form-block {
+        min-width: 0;
+    }
+}
+</style>

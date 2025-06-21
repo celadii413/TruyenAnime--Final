@@ -1,0 +1,67 @@
+@model TruyenAnime.Models.Order
+
+@{
+    ViewData["Title"] = "Thanh toán";
+}
+<!-- Link đến CSS -->
+<link rel="stylesheet" href="~/css/checkout.css" asp-append-version="true" />
+
+<div class="container mt-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Trang chủ</a></li>
+            <li class="breadcrumb-item"><a asp-controller="Cart" asp-action="Index">Giỏ hàng</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Thanh toán</li>
+        </ol>
+    </nav>
+
+    <h2 class="mb-4">Thông tin thanh toán</h2>
+
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <form asp-action="Index" method="post">
+        @Html.AntiForgeryToken()
+        <div class="row">
+            <div class="col-md-7">
+                <h4>Thông tin giao hàng</h4>
+                <hr />
+                <div class="form-group mb-3">
+                    <label asp-for="Name" class="form-label">Họ và Tên</label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-3">
+                    <label asp-for="Address" class="form-label">Địa chỉ</label>
+                    <input asp-for="Address" class="form-control" />
+                    <span asp-validation-for="Address" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-3">
+                    <label asp-for="PhoneNumber" class="form-label">Số điện thoại</label>
+                    <input asp-for="PhoneNumber" class="form-control" />
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-3">
+                    <label asp-for="Email" class="form-label">Email</label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="col-md-5">
+                 <div class="card">
+                    <div class="card-header">
+                        <h4>Đơn hàng của bạn</h4>
+                    </div>
+                    <div class="card-body">
+                       <p>Vui lòng kiểm tra lại giỏ hàng trước khi đặt hàng.</p>
+                       <p>Tổng số tiền cần thanh toán sẽ được tính dựa trên giỏ hàng hiện tại của bạn.</p>
+                       <a asp-controller="Cart" asp-action="Index" class="btn btn-outline-secondary">Xem lại giỏ hàng</a>
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-checkout w-100">Hoàn tất đơn hàng</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

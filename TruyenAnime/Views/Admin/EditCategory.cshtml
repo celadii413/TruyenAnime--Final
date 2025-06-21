@@ -1,0 +1,23 @@
+﻿@model TruyenAnime.Models.Category
+@{
+    ViewData["Title"] = Model.Id == 0 ? "Thêm Danh mục" : "Sửa Danh mục";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="container mt-5">
+    <h2 class="mb-4">@ViewData["Title"]</h2>
+
+    <form asp-action="@(Model.Id == 0 ? "CreateCategory" : "EditCategory")" method="post">
+        <div class="mb-3">
+            <label asp-for="Name" class="form-label">Tên danh mục</label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="d-flex justify-content-between">
+            <a asp-action="Categories" class="btn btn-outline-secondary">← Quay lại</a>
+            <button type="submit" class="btn btn-success">Lưu</button>
+        </div>
+    </form>
+</div>
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

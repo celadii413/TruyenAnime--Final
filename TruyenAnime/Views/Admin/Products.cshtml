@@ -1,0 +1,57 @@
+@model IEnumerable<TruyenAnime.Models.Product>
+@{
+    ViewData["Title"] = "Quản lý Sản phẩm";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>@ViewData["Title"]</h2>
+        <a asp-action="CreateProduct" class="btn btn-success">
+            <i class="fas fa-plus"></i> Thêm sản phẩm mới
+        </a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-hover table-bordered shadow-sm align-middle text-center">
+            <thead class="table-dark">
+                <tr>
+                    <th style="min-width: 100px;">Ảnh</th>
+                    <th style="min-width: 180px;">Tên</th>
+                    <th style="min-width: 140px;">Tác giả</th>
+                    <th>Giá</th>
+                    <th>Tồn kho</th>
+                    <th style="min-width: 140px;">Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Any())
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                <img src="@item.ImageUrl" alt="@item.Name" style="width: 80px; height: auto; object-fit: cover;" />
+                            </td>
+                            <td class="text-start">@item.Name</td>
+                            <td>@item.Author</td>
+                            <td>@item.Price.ToString("N0") VNĐ</td>
+                            <td>@item.Stock</td>
+                            <td>
+                                <div class="d-flex justify-content-center gap-2 flex-wrap">
+                                    <a asp-action="EditProduct" asp-route-id="@item.Id" class="btn btn-sm btn-outline-warning">Sửa</a>
+                                    <a asp-action="DeleteProduct" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger">Xóa</a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="6" class="text-center">Không có sản phẩm nào.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

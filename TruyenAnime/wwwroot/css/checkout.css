@@ -1,0 +1,41 @@
+﻿.btn-checkout {
+    background-color: #d4f8cb;
+    color: #1c6b2b;
+    border: none;
+    font-weight: 500;
+    padding: 12px;
+    border-radius: 6px;
+    transition: opacity 0.3s ease;
+    height: 48px;
+}
+
+    .btn-checkout:hover {
+        background-color: #c0f0b6;
+        color: #145c22;
+    }
+.card {
+    border-radius: 10px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+    border: none;
+}
+
+.card-header {
+    background-color: #F9F9F9;
+    font-weight: 600;
+    font-size: 18px;
+    border-bottom: 1px solid #eee;
+}
+
+.breadcrumb a {
+    color: #A095E0; 
+    text-decoration: none;
+}
+
+.breadcrumb .breadcrumb-item.active {
+    color: #666666; 
+    font-weight: 400;
+}
+
+.breadcrumb a:hover {
+    text-decoration: underline;
+}

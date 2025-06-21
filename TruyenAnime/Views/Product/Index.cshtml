@@ -1,0 +1,144 @@
+@model IEnumerable<TruyenAnime.Models.Product>
+@using TruyenAnime.Models
+
+@{
+    ViewData["Title"] = "Tất cả sản phẩm";
+    var categories = ViewBag.Categories as List<Category>;
+    var selectedCategoryId = ViewBag.SelectedCategoryId as int?;
+    var selectedFilterType = ViewBag.SelectedFilterType as string;
+    var searchTerm = ViewBag.SearchTerm as string;
+    var currentPage = ViewBag.CurrentPage as int? ?? 1;
+    var totalPages = ViewBag.TotalPages as int? ?? 1;
+}
+
+<div class="product-page-wrapper">
+    <nav class="breadcrumb-bar" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Trang chủ</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Sản phẩm</li>
+        </ol>
+    </nav>
+
+    <div class="container-fluid mt-4">
+        <div class="row">
+            <!-- Filters -->
+            <div class="col-lg-3">
+                <aside class="filter-sidebar">
+                    <div class="filter-section">
+                        <h5 class="filter-title">Danh mục</h5>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item @(selectedCategoryId == null ? "active" : "")">
+                                <a asp-action="Index" asp-route-categoryId="" asp-route-filterType="@selectedFilterType" asp-route-searchTerm="@searchTerm">Tất cả</a>
+                            </li>
+                            @foreach (var category in categories)
+                            {
+                                <li class="list-group-item @(selectedCategoryId == category.Id ? "active" : "")">
+                                    <a asp-action="Index" asp-route-categoryId="@category.Id" asp-route-filterType="@selectedFilterType" asp-route-searchTerm="@searchTerm">@category.Name</a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                    <div class="filter-section mt-4">
+                        <h5 class="filter-title">Lọc nhanh</h5>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item @(selectedFilterType == "new" ? "active" : "")">
+                                <a asp-action="Index"
+                                   asp-route-categoryId="@selectedCategoryId"
+                                   asp-route-filterType="@(selectedFilterType == "new" ? null : "new")"
+                                   asp-route-searchTerm="@searchTerm">
+                                    Hàng mới
+                                </a>
+                            </li>
+                            <li class="list-group-item @(selectedFilterType == "bestseller" ? "active" : "")">
+                                <a asp-action="Index"
+                                   asp-route-categoryId="@selectedCategoryId"
+                                   asp-route-filterType="@(selectedFilterType == "bestseller" ? null : "bestseller")"
+                                   asp-route-searchTerm="@searchTerm">
+                                    Bán chạy
+                                </a>
+                            </li>
+                            <li class="list-group-item @(selectedFilterType == "hotdeal" ? "active" : "")">
+                                <a asp-action="Index"
+                                   asp-route-categoryId="@selectedCategoryId"
+                                   asp-route-filterType="@(selectedFilterType == "hotdeal" ? null : "hotdeal")"
+                                   asp-route-searchTerm="@searchTerm">
+                                    Hot Deals
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </aside>
+            </div>
+
+            <!-- Product Grid -->
+            <div class="col-lg-9">
+                <main>
+                    <div class="row">
+                        @if (Model != null && Model.Any())
+                        {
+                            foreach (var product in Model)
+                            {
+                                <div class="col-lg-4 col-md-6 mb-4">
+                                    <div class="card product-card h-100">
+                                        <a asp-controller="Product" asp-action="Detail" asp-route-id="@product.Id">
+                                            <img src="@product.ImageUrl" class="card-img-top product-img-fixed" alt="@product.Name">
+                                        </a>
+                                        <div class="card-body d-flex flex-column">
+                                            <h5 class="card-title">
+                                                <a asp-controller="Product" asp-action="Detail" asp-route-id="@product.Id">@product.Name</a>
+                                            </h5>
+                                            <p class="product-price">@product.Price.ToString("C", new System.Globalization.CultureInfo("vi-VN"))</p>
+                                            <form asp-controller="Cart" asp-action="AddToCart" asp-route-id="@product.Id" method="post">
+                                                <button type="submit" class="btn btn-primary add-to-cart-btn mt-auto">Thêm vào giỏ</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="col-12">
+                                <div class="alert alert-info" role="alert">
+                                    Không tìm thấy sản phẩm nào phù hợp.
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+                    <!-- Pagination -->
+                    @if (totalPages > 1)
+                    {
+                        <nav aria-label="Pagination" class="mt-4 d-flex justify-content-center">
+                            <ul class="pagination">
+                                <li class="page-item @(currentPage == 1 ? "disabled" : "")">
+                                    <a class="page-link" asp-action="Index" asp-route-categoryId="@selectedCategoryId"
+                                       asp-route-filterType="@selectedFilterType" asp-route-searchTerm="@searchTerm"
+                                       asp-route-page="@(currentPage - 1)">Trước</a>
+                                </li>
+
+                                @for (int i = 1; i <= totalPages; i++)
+                                {
+                                    <li class="page-item @(currentPage == i ? "active" : "")">
+                                        <a class="page-link" asp-action="Index" asp-route-categoryId="@selectedCategoryId"
+                                           asp-route-filterType="@selectedFilterType" asp-route-searchTerm="@searchTerm"
+                                           asp-route-page="@i">@i</a>
+                                    </li>
+                                }
+
+                                <li class="page-item @(currentPage == totalPages ? "disabled" : "")">
+                                    <a class="page-link" asp-action="Index" asp-route-categoryId="@selectedCategoryId"
+                                       asp-route-filterType="@selectedFilterType" asp-route-searchTerm="@searchTerm"
+                                       asp-route-page="@(currentPage + 1)">Sau</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    }
+                </main>
+            </div>
+        </div>
+    </div>
+</div>
+@section Styles {
+    <link rel="stylesheet" href="~/css/product.css" asp-append-version="true" />
+}

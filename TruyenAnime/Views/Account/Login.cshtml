@@ -1,0 +1,93 @@
+@{
+    ViewData["Title"] = "Đăng nhập";
+}
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <h2 class="text-center mb-4 page-title">Đăng nhập</h2>
+            <hr class="title-hr mb-4"/>
+            <form asp-controller="Account" asp-action="Login" method="post">
+                <div class="mb-3">
+                    <label for="usernameOrEmailInput" class="form-label">UserName/Email</label>
+                    <input type="text" class="form-control form-control-lg" id="usernameOrEmailInput" name="username" placeholder="UserName của bạn" required> 
+                </div>
+                <div class="mb-3">
+                    <label for="passwordInput" class="form-label">Mật khẩu</label>
+                    <input type="password" class="form-control form-control-lg" id="passwordInput" name="password" placeholder="Mật khẩu của bạn" required> 
+                </div>
+                <div class="mb-3">
+                    <a href="@Url.Action("Register", "Account")" class="form-text">Chưa có tài khoản? Đăng ký</a>
+                </div>
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary btn-lg btn-submit">Đăng nhập</button>
+                </div>
+                @if (ViewBag.Error != null)
+                {
+                    <div class="alert alert-danger mt-3">@ViewBag.Error</div>
+                }
+                @if (ViewBag.Success != null)
+                {
+                    <div class="alert alert-success mt-3">@ViewBag.Success</div>
+                    <script>
+                        // Nếu đăng nhập thành công, tạo token ngẫu nhiên và lưu vào localStorage
+                        function randomToken(length) {
+                            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+                            let result = '';
+                            for (let i = 0; i < length; i++) {
+                                result += chars.charAt(Math.floor(Math.random() * chars.length));
+                            }
+                            return result;
+                        }
+                        // Chỉ lưu token nếu chưa có
+                        if (!localStorage.getItem('mangastore_token')) {
+                            localStorage.setItem('mangastore_token', randomToken(32));
+                        }
+                    </script>
+                }
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <style>
+        .page-title {
+            font-weight: 300;
+            font-size: 2.5rem;
+        }
+        .title-hr {
+            width: 100px;
+            margin: 0 auto 2rem auto;
+            border-top: 2px solid #A095E0;
+        }
+        .form-control-lg {
+            padding: 0.75rem 1.25rem;
+            font-size: 1rem;
+        }
+        .btn-submit {
+            background-color: #A0E0A0; 
+            border-color: #A0E0A0;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .btn-submit:focus {
+            outline: none;
+            box-shadow: none;
+        }
+
+        .btn-submit:hover {
+            background-color: #8ccf8c;
+            border-color: #8ccf8c;
+            color: #333;
+        }
+        .form-text {
+            color: #A095E0;
+            text-decoration: none;
+        }
+        .form-text:hover {
+            text-decoration: underline;
+        }
+    </style>
+}

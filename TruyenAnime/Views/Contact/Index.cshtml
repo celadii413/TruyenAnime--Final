@@ -1,0 +1,120 @@
+@model TruyenAnime.Models.ContactMessage
+@{
+    ViewData["Title"] = "Liên hệ";
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+
+<div class="container-fluid mt-4 contact-page">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Trang chủ</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Liên hệ</li>
+        </ol>
+    </nav>
+
+    <!-- Google Map -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="map-placeholder text-center d-flex align-items-center justify-content-center">
+                <iframe src="https://www.google.com/maps/embed?pb=..." width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Thông tin liên hệ -->
+        <div class="col-lg-6 mb-4 mb-lg-0">
+            <h3>Chúng tôi ở đây</h3>
+            <div class="logo-contact mb-3">マンガ</div>
+            <p><strong>Địa chỉ:</strong> 123 Đường ABC, Phường XYZ, Quận 1, TP. HCM</p>
+            <p><strong>Email:</strong> contact@manga.store</p>
+            <p><strong>Số điện thoại:</strong> (028) 3812 3456</p>
+        </div>
+
+        <!-- Form liên hệ -->
+        <div class="col-lg-6">
+            <h3>Liên hệ với chúng tôi</h3>
+            <p>Hãy gửi thắc mắc của bạn cho chúng tôi và chúng tôi sẽ phản hồi sớm nhất có thể.</p>
+
+            <form asp-controller="Contact" asp-action="Index" method="post">
+                <div class="mb-3">
+                    <label asp-for="Name" class="form-label">Tên*</label>
+                    <input asp-for="Name" class="form-control" required />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Email" class="form-label">Email*</label>
+                    <input asp-for="Email" class="form-control" required />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Message" class="form-label">Nội dung bình luận</label>
+                    <textarea asp-for="Message" class="form-control" rows="5" required></textarea>
+                    <span asp-validation-for="Message" class="text-danger"></span>
+                </div>
+                <button type="submit" class="btn btn-submit">Gửi</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <style>
+        .contact-page {
+            padding: 20px 60px;
+        }
+
+        .breadcrumb a {
+            color: #A095E0;
+            text-decoration: none;
+        }
+
+        .map-placeholder {
+            height: 300px;
+            background-color: #eaeaea;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .contact-page h3 {
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+        }
+
+        .logo-contact {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #A095E0;
+        }
+
+        .btn-submit {
+            background-color: #A4D562;
+            color: #fff;
+            font-weight: 500;
+            padding: 0.5rem 1.5rem;
+            border-radius: 6px;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .btn-submit:focus {
+            outline: none;
+            box-shadow: none;
+        }
+
+            .btn-submit:hover {
+                background-color: #89C752;
+                color: #fff;
+            }
+
+        .form-control:focus {
+            border-color: #A4D562;
+            box-shadow: 0 0 0 0.25rem rgba(160, 149, 224, 0.25);
+        }
+    </style>
+}
