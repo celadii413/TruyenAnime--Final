@@ -58,6 +58,30 @@ namespace TruyenAnime.Repositories
             await _context.SaveChangesAsync();
             return true;
         }
+        public async Task<bool> UpdateUsernameAsync(int userId, string newUsername)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+            if (user == null) return false;
+
+            user.Username = newUsername;
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> UpdateEmailAsync(int userId, string newEmail)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+            if (user == null) return false;
+
+            user.Email = newEmail;
+            await _context.SaveChangesAsync();
+            return true;
+        }
+        public async Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
+        }
+
 
     }
 }

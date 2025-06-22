@@ -12,6 +12,8 @@ namespace TruyenAnime.Interfaces
         Task<User> GetUserByIdAsync(int userId);
         Task<IEnumerable<Order>> GetUserOrdersAsync(int userId);
         Task<bool> ChangePasswordAsync(int userId, string currentPassword, string newPassword);
-
+        Task<bool> UpdateUsernameAsync(int userId, string newUsername);
+        Task<bool> UpdateEmailAsync(int userId, string newEmail);
+        Task SaveChangesAsync();
     }
 }

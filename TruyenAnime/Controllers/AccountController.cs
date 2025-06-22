@@ -59,19 +59,38 @@ namespace TruyenAnime.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register(string username, string password, string email) 
+        public async Task<IActionResult> Register(string username, string password, string email)
         {
-            if (await _accountRepository.IsUsernameTakenAsync(username)) 
+            if (await _accountRepository.IsUsernameTakenAsync(username))
             {
                 ViewBag.Error = "Tên đăng nhập đã tồn tại!";
                 return View();
             }
 
-            var newUser = await _accountRepository.RegisterUserAsync(username, password, email); 
+            if (!IsValidEmail(email))
+            {
+                ViewBag.Error = "Địa chỉ email không hợp lệ!";
+                return View();
+            }
+
+            if (!email.EndsWith("@gmail.com"))
+            {
+                ViewBag.Error = "Email phải có đuôi @gmail.com!";
+                return View();
+            }
+
+            var newUser = await _accountRepository.RegisterUserAsync(username, password, email);
 
             TempData["SuccessMessage"] = "Đăng ký thành công!";
             return RedirectToAction("Login");
         }
+
+        private bool IsValidEmail(string email)
+        {
+            var emailRegex = @"^[^@\s]+@[^@\s]+\.[^@\s]+$"; 
+            return System.Text.RegularExpressions.Regex.IsMatch(email, emailRegex);
+        }
+
 
         public IActionResult Logout()
         {
@@ -104,36 +123,60 @@ namespace TruyenAnime.Controllers
             ViewData["Title"] = "Địa chỉ";
             return View();
         }
-        [HttpGet]
-        public IActionResult ChangePassword()
+        public async Task<IActionResult> ChangeInfo()
         {
             int? userId = HttpContext.Session.GetInt32("UserId");
             if (userId == null) return RedirectToAction("Login");
 
-            ViewData["Title"] = "Đổi mật khẩu";
-            return View();
+            var user = await _accountRepository.GetUserByIdAsync(userId.Value);
+            if (user == null) return RedirectToAction("Login");
+
+            var model = new ChangeInfo
+            {
+                Username = user.Username,
+                Email = user.Email
+            };
+
+            return View(model);
         }
+
         [HttpPost]
-        public async Task<IActionResult> ChangePassword(ChangePassword model)
+        public async Task<IActionResult> ChangeInfo(ChangeInfo model)
         {
             int? userId = HttpContext.Session.GetInt32("UserId");
             if (userId == null) return RedirectToAction("Login");
 
             if (!ModelState.IsValid) return View(model);
 
-            bool result = await _accountRepository.ChangePasswordAsync(userId.Value, model.CurrentPassword, model.NewPassword);
+            var user = await _accountRepository.GetUserByIdAsync(userId.Value);
+            if (user == null) return RedirectToAction("Login");
 
-            if (result)
+            if (user.Password != model.CurrentPassword)
             {
-                TempData["SuccessMessage"] = "Đổi mật khẩu thành công!";
-                return RedirectToAction("MyAccount");
-            }
-            else
-            {
-                ModelState.AddModelError(string.Empty, "Mật khẩu hiện tại không đúng!");
+                ModelState.AddModelError("CurrentPassword", "Mật khẩu hiện tại không đúng!");
                 return View(model);
             }
+
+            user.Username = model.Username;
+            user.Email = model.Email;
+
+            if (!string.IsNullOrWhiteSpace(model.NewPassword))
+            {
+                if (model.NewPassword != model.ConfirmPassword)
+                {
+                    ModelState.AddModelError("ConfirmPassword", "Mật khẩu xác nhận không khớp!");
+                    return View(model);
+                }
+
+                user.Password = model.NewPassword;
+            }
+
+            await _accountRepository.SaveChangesAsync();
+
+            TempData["SuccessMessage"] = "Cập nhật tài khoản thành công!";
+            return RedirectToAction("MyAccount");
         }
+
 
     }
 }

@@ -55,9 +55,10 @@
         <div class="account-info-block">
             <div class="account-block-title">Thông tin tài khoản</div>
             <div><strong>@Model.Username</strong></div>
+            <div><strong>@Model.Email</strong></div>
 
-            <form asp-controller="Account" asp-action="ChangePassword" method="get" class="mt-3">
-                <button type="submit" class="account-address-btn">Đổi mật khẩu</button>
+            <form asp-controller="Account" asp-action="ChangeInfo" method="get" class="mt-3">
+                <button type="submit" class="account-address-btn">Đổi thông tin</button>
             </form>
         </div>
     </div>
