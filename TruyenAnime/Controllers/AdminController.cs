@@ -29,10 +29,23 @@ namespace TruyenAnime.Controllers
         }
 
         // GET: /Admin/Products
-        public async Task<IActionResult> Products()
+        public async Task<IActionResult> Products(int page = 1)
         {
-            var products = await _adminRepository.GetAllProductsAsync(); 
-            return View(products);
+            int pageSize = 5;
+
+            var allProducts = await _adminRepository.GetAllProductsAsync();
+            int totalProducts = allProducts.Count();
+            int totalPages = (int)Math.Ceiling((double)totalProducts / pageSize);
+
+            var pagedProducts = allProducts
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            ViewBag.CurrentPage = page;
+            ViewBag.TotalPages = totalPages;
+
+            return View(pagedProducts);
         }
 
         // GET: Admin/CreateProduct
@@ -336,7 +349,7 @@ namespace TruyenAnime.Controllers
         [HttpGet]
         public IActionResult CreateCategory()
         {
-            return View();
+            return View(new Category());
         }
 
         // POST: Admin/CreateCategory

@@ -17,10 +17,11 @@ namespace TruyenAnime.Repositories
             _context = context;
         }
 
-        public async Task<User> AuthenticateUserAsync(string username, string password)
+        public async Task<User> AuthenticateUserAsync(string login, string password)
         {
-            return await _context.Users.FirstOrDefaultAsync(u => u.Username == username && u.Password == password);
+            return await _context.Users.FirstOrDefaultAsync(u => (u.Username == login || u.Email == login) && u.Password == password);
         }
+
 
         public async Task<bool> IsUsernameTakenAsync(string username)
         {

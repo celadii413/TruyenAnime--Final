@@ -47,7 +47,7 @@ namespace TruyenAnime.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            ViewBag.Error = "Sai tên đăng nhập hoặc mật khẩu!";
+            ViewBag.Error = "Sai tên đăng nhập/Email hoặc mật khẩu!";
             return View();
         }
 
